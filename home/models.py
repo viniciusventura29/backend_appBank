@@ -1,14 +1,22 @@
-import email
-from pyexpat import model
-from statistics import mode
-from turtle import ondrag
 from django.db import models
 
 class Cliente(models.Model):
-    cpf = models.CharField(max_length=14, primary_key = True,,null = False, blank = False)
+    GEN_MASC = 'M'
+    GEN_FEM = 'F'
+    GEN_OUTROS = 'O'
+    GEN_NAOESPECIFICADO = 'N'
+
+    GENEROS = [
+        (GEN_MASC, 'Genero masculino'),
+        (GEN_FEM , 'Genero feminino'),
+        (GEN_OUTROS , 'Genero outro'), 
+        (GEN_NAOESPECIFICADO, 'Genero não especificado'),
+    ]
+    cpf = models.CharField(max_length=14, primary_key = True,null = False, blank = False)
     nome = models.CharField(max_length=15)
     sobrenome = models.CharField(max_length=30)
     nasc = models.DateField(null = False, blank = False)
+    genero = models.CharField(max_length=1,choices=GENEROS,default=0)
 
 class Endereco(models.Model):
     cpf = models.ForeignKey(Cliente, on_delete=models.PROTECT)
@@ -26,7 +34,7 @@ class Usuario(models.Model):
 
 class Contatos(models.Model):
     cpf = models.ForeignKey(Cliente,on_delete=models.PROTECT)
-    celular = models.Charfield(max_length=11)
+    celular = models.CharField(max_length=11)
     email = models.EmailField()
 
 class Conta(models.Model):
@@ -42,8 +50,7 @@ class Conta(models.Model):
 
     tipo_conta = models.CharField(max_length=1,choices=TIPO_CONTA,default=TIPO_CORRENTE)
     cpf = models.ForeignKey(Cliente,on_delete=models.PROTECT)
-    dinheiro = models.DecimalField(max_digits=10, decimal_places=2)
-
+    saldo = models.DecimalField(max_digits=10, decimal_places=2)
 
 class Cartoes(models.Model):
     TIPO_STANDARD = 'S'
@@ -84,9 +91,22 @@ class Extrato(models.Model):
     conta = models.ForeignKey(Conta,on_delete = models.PROTECT)
     data = models.DateField(auto_now_add=True)
     tipo = models.CharField(max_length=20)
-    dinheiro = models.DecimalField(max_digits=10, decimal_places=2)
+    saldo = models.DecimalField(max_digits=10, decimal_places=2)
 
 class Emprestimo(models.Model):
     conta = models.ForeignKey(Conta,on_delete = models.PROTECT)
-    data = models.DateField(auto_now_add=True)
-    dinheiro = models.DecimalField(max_digits=10, decimal_places=2)
+    data_fisrt_parcela = models.DateField(auto_now_add=True)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
+    qtd_parcelas = models.IntegerField()
+    juros = models.DecimalField(max_digits=3,decimal_places=2)
+    situacao = models.BooleanField()
+    aprovado = models.BooleanField()
+
+class Pgmt_emprestimo(models.Model):
+    emprestimo = models.ForeignKey(Emprestimo,on_delete=models.PROTECT)
+    data_vencimento = models.DateField()
+    data_pag = models.DateField()
+
+class Favoritos(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
+    contato = models.ForeignKey(Contatos, on_delete=models.PROTECT)
