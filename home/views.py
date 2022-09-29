@@ -7,6 +7,10 @@ class ClienteListView(viewsets.ModelViewSet):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
 
+class ClienteInsertImageListView(viewsets.ModelViewSet):
+    queryset = Cliente.objects.all()
+    serializer_class = ClienteInsertImageSerializer
+
 class EnderecoListView(viewsets.ModelViewSet):
     queryset = Endereco.objects.all()
     serializer_class = EnderecoSerializer

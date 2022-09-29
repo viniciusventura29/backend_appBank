@@ -2,8 +2,15 @@ from dataclasses import field
 from pyexpat import model
 from rest_framework import serializers
 from .models import *
+from pictures.contrib.rest_framework import PictureField
 
 class ClienteSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = Cliente
+        fields = '__all__'
+    foto = PictureField()
+
+class ClienteInsertImageSerializer(serializers.ModelSerializer):
     class Meta :
         model = Cliente
         fields = '__all__'

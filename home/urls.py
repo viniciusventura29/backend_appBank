@@ -2,7 +2,13 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
 from .views import *
 
+
 router = routers.DefaultRouter()
+
+
+
+router.register('InsertJogador',JogadorInsertViewSet)
+router.register('Jogador',JogadorViewSet)   
 
 router.register('Cliente',ClienteListView)
 router.register('Endereco',EnderecoListView)

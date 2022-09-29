@@ -1,4 +1,6 @@
+from distutils.command.upload import upload
 from django.db import models
+from pictures.models import PictureField
 
 class Cliente(models.Model):
     GEN_MASC = 'M'
@@ -17,6 +19,7 @@ class Cliente(models.Model):
     sobrenome = models.CharField(max_length=30)
     nasc = models.DateField(null = False, blank = False)
     genero = models.CharField(max_length=1,choices=GENEROS,default=0)
+    foto = PictureField(upload_to='loja/imagens/')
 
 class Endereco(models.Model):
     cpf = models.ForeignKey(Cliente, on_delete=models.PROTECT)
@@ -110,3 +113,4 @@ class Pgmt_emprestimo(models.Model):
 class Favoritos(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
     contato = models.ForeignKey(Contatos, on_delete=models.PROTECT)
+    
