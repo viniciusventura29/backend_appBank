@@ -1,6 +1,7 @@
 from distutils.command.upload import upload
 from django.db import models
 from pictures.models import PictureField
+from django.conf import settings
 
 class Cliente(models.Model):
     GEN_MASC = 'M'
@@ -20,6 +21,7 @@ class Cliente(models.Model):
     nasc = models.DateField(null = False, blank = False)
     genero = models.CharField(max_length=1,choices=GENEROS,default=0)
     foto = PictureField(upload_to='loja/imagens/')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
 class Endereco(models.Model):
     cpf = models.ForeignKey(Cliente, on_delete=models.PROTECT)
