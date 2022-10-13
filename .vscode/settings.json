@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/bf08f860-bee9-4ebb-8f9c-72536bf948e9/AppServices/subscriptions/bf08f860-bee9-4ebb-8f9c-72536bf948e9/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/bankappbackend",
+    "appService.deploySubpath": "."
+}
