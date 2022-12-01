@@ -5,7 +5,6 @@ from .serializer import *
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-
 class CutomObtainPairView(TokenObtainPairView):
     serializer_class = TokenObtainSerializer
     def post(self, request, *args, **kwargs):
