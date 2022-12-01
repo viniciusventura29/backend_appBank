@@ -3,6 +3,50 @@ from pyexpat import model
 from rest_framework import serializers
 from .models import *
 from pictures.contrib.rest_framework import PictureField
+from rest_framework.validators import ValidationError
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+class TokenObtainSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
+
+        return data
+
+class ClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = [
+            'id',
+            'cpf',
+            'email',
+            'password',
+        ]
+
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+
+    def validate(self, attrs):
+        name_exists = Client.objects.filter(name=attrs["name"]).exists()
+        cpf_exists = Client.objects.filter(cpf=attrs["cpf"]).exists()
+        email_exists = Client.objects.filter(email=attrs["email"]).exists()
+
+        if name_exists:
+            raise ValidationError("Name has already been used")
+
+        if cpf_exists:
+            raise ValidationError("CPF has already been used")
+
+        if email_exists:
+            raise ValidationError("E-mail has already been used")
+
+        return super().validate(attrs)
+
 
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta :

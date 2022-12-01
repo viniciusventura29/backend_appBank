@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
     'rest_framework',
     'pictures',
     'home',
-    'core',
     'djoser',
 ]
 
@@ -54,7 +54,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
+
+CORS_ALLOW_ALL_ORIGINS= True
 
 ROOT_URLCONF = 'config.urls'
 
@@ -149,4 +153,4 @@ SIMPLE_JWT = {
         'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }
 
-AUTH_USER_MODEL = 'core.Usuario'
+AUTH_USER_MODEL = 'home.Client'

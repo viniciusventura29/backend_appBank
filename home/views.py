@@ -2,6 +2,33 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import *
 from .serializer import *
+from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class CutomObtainPairView(TokenObtainPairView):
+    serializer_class = TokenObtainSerializer
+    def post(self, request, *args, **kwargs):
+        print("-"*50)
+        
+        return super().post(request, *args, **kwargs)
+
+class ClientViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+    def create(self, request, *args, **kwargs):
+        client_data = request.data 
+
+        new_client = Client.objects.create_superuser(
+            email=client_data["email"],
+            password=client_data["password"],
+            cpf=client_data["cpf"],
+        )
+
+        serializer = ClientSerializer(new_client)
+
+        return Response(serializer.data)
 
 class ClienteListView(viewsets.ModelViewSet):
     queryset = Cliente.objects.all()
