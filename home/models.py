@@ -28,14 +28,14 @@ class CustomUserManager(BaseUserManager):
 
 class Client(AbstractUser):
     username = None
-    cpf = models.CharField(max_length=14, unique=True)
+    cpf = models.CharField(max_length=14, primary_key=True, unique=True)
 
     objects = CustomUserManager()
     USERNAME_FIELD = "cpf"
     REQUIRED_FIELDS = ["email", "password"]
 
     def __str__(self):
-        return self.name
+        return self.cpf
 
 class Cliente(models.Model):
     GEN_MASC = 'M'
@@ -49,16 +49,15 @@ class Cliente(models.Model):
         (GEN_OUTROS , 'Genero outro'), 
         (GEN_NAOESPECIFICADO, 'Genero não especificado'),
     ]
-    cpf = models.CharField(max_length=14, primary_key = True,null = False, blank = False)
     nome = models.CharField(max_length=15)
     sobrenome = models.CharField(max_length=30)
     nasc = models.DateField(null = False, blank = False)
     genero = models.CharField(max_length=1,choices=GENEROS,default=0)
     foto = PictureField(upload_to='loja/imagens/')
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class Endereco(models.Model):
-    cpf = models.ForeignKey(Cliente, on_delete=models.PROTECT)
+    cpf = models.ForeignKey(Client, on_delete=models.PROTECT)
     cep = models.CharField(max_length=8,null = False, blank = False)
     rua = models.CharField(max_length=50,null = False, blank = False)
     bairro = models.CharField(max_length=50,null = False, blank = False)
@@ -68,11 +67,11 @@ class Endereco(models.Model):
     complemento = models.CharField(max_length=10)
     
 class Usuario(models.Model):
-    cpf = models.ForeignKey(Cliente, on_delete=models.PROTECT)
+    cpf = models.ForeignKey(Client, on_delete=models.PROTECT)
     senha = models.CharField(max_length=30,null = False, blank = False)
 
 class Contatos(models.Model):
-    cpf = models.ForeignKey(Cliente,on_delete=models.PROTECT)
+    cpf = models.ForeignKey(Client,on_delete=models.PROTECT)
     celular = models.CharField(max_length=11)
     email = models.EmailField()
 
@@ -88,7 +87,7 @@ class Conta(models.Model):
     ]
 
     tipo_conta = models.CharField(max_length=1,choices=TIPO_CONTA,default=TIPO_CORRENTE)
-    cpf = models.ForeignKey(Cliente,on_delete=models.PROTECT)
+    cpf = models.ForeignKey(Client,on_delete=models.PROTECT)
     saldo = models.DecimalField(max_digits=10, decimal_places=2)
 
 class Cartoes(models.Model):
@@ -147,6 +146,6 @@ class Pgmt_emprestimo(models.Model):
     data_pag = models.DateField()
 
 class Favoritos(models.Model):
-    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
+    cliente = models.ForeignKey(Client, on_delete=models.PROTECT)
     contato = models.ForeignKey(Contatos, on_delete=models.PROTECT)
     

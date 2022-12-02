@@ -7,9 +7,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 class CutomObtainPairView(TokenObtainPairView):
     serializer_class = TokenObtainSerializer
-    def post(self, request, *args, **kwargs):
-        print("-"*50)
-        
+    def post(self, request, *args, **kwargs):   
+
         return super().post(request, *args, **kwargs)
 
 class ClientViewSet(viewsets.ModelViewSet):
