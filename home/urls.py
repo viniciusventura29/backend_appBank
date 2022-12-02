@@ -5,8 +5,6 @@ from .views import *
 
 router = routers.DefaultRouter()  
 
-router.register('Cliente',ClienteListView)
-router.register('ClienteInsertImage',ClienteInsertImageListView)
 router.register('Endereco',EnderecoListView)
 router.register('Contatos',ContaListView)
 router.register('Conta',ContaListView)

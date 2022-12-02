@@ -22,19 +22,14 @@ class ClientViewSet(viewsets.ModelViewSet):
             email=client_data["email"],
             password=client_data["password"],
             cpf=client_data["cpf"],
+            nome=client_data["nome"],
+            sobrenome=client_data["sobrenome"],
+            genero=client_data["genero"]
         )
 
         serializer = ClientSerializer(new_client)
 
         return Response(serializer.data)
-
-class ClienteListView(viewsets.ModelViewSet):
-    queryset = Cliente.objects.all()
-    serializer_class = ClienteSerializer
-
-class ClienteInsertImageListView(viewsets.ModelViewSet):
-    queryset = Cliente.objects.all()
-    serializer_class = ClienteInsertImageSerializer
 
 class EnderecoListView(viewsets.ModelViewSet):
     queryset = Endereco.objects.all()

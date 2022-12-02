@@ -29,15 +29,6 @@ class CustomUserManager(BaseUserManager):
 class Client(AbstractUser):
     username = None
     cpf = models.CharField(max_length=14, primary_key=True, unique=True)
-
-    objects = CustomUserManager()
-    USERNAME_FIELD = "cpf"
-    REQUIRED_FIELDS = ["email", "password"]
-
-    def __str__(self):
-        return self.cpf
-
-class Cliente(models.Model):
     GEN_MASC = 'M'
     GEN_FEM = 'F'
     GEN_OUTROS = 'O'
@@ -54,7 +45,13 @@ class Cliente(models.Model):
     nasc = models.DateField(null = False, blank = False)
     genero = models.CharField(max_length=1,choices=GENEROS,default=0)
     foto = PictureField(upload_to='loja/imagens/')
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    objects = CustomUserManager()
+    USERNAME_FIELD = "cpf"
+    REQUIRED_FIELDS = ["email", "password","nome","sobrenome","nasc"]
+
+    def __str__(self):
+        return self.nome
 
 class Endereco(models.Model):
     cpf = models.ForeignKey(Client, on_delete=models.PROTECT)
@@ -146,6 +143,6 @@ class Pgmt_emprestimo(models.Model):
     data_pag = models.DateField()
 
 class Favoritos(models.Model):
-    cliente = models.ForeignKey(Client, on_delete=models.PROTECT)
+    client = models.ForeignKey(Client, on_delete=models.PROTECT)
     contato = models.ForeignKey(Contatos, on_delete=models.PROTECT)
     

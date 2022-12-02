@@ -19,11 +19,7 @@ class TokenObtainSerializer(TokenObtainPairSerializer):
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
-        fields = [
-            'cpf',
-            'email',
-            'password',
-        ]
+        fields = '__all__'
 
         extra_kwargs = {
             'password': {'write_only': True}
@@ -46,17 +42,6 @@ class ClientSerializer(serializers.ModelSerializer):
 
         return super().validate(attrs)
 
-
-class ClienteSerializer(serializers.ModelSerializer):
-    class Meta :
-        model = Cliente
-        fields = '__all__'
-    foto = PictureField()
-
-class ClienteInsertImageSerializer(serializers.ModelSerializer):
-    class Meta :
-        model = Cliente
-        fields = '__all__'
 
 class EnderecoSerializer(serializers.ModelSerializer):
     class Meta :
