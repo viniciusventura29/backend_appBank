@@ -1,5 +1,3 @@
-// vulnerable.js - arquivo intencionalmente inseguro (para testes locais apenas)
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const { exec } = require("child_process");
