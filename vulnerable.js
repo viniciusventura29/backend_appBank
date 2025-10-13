@@ -6,7 +6,6 @@ const fs = require("fs");
 const app = express();
 app.use(bodyParser.json());
 
-// *1* - CORS aberto (qualquer site pode fazer requisições)
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   next();
