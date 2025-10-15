@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 app.post("/eval", (req, res) => {
   const code = req.body.code; // entrada do usuário
   try {
-    const result = eval(code); // **muito perigoso**
+    const result = eval(code);
     res.send({ ok: true, result });
   } catch (e) {
     res.status(400).send({ ok: false, error: e.message });
