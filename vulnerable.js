@@ -12,7 +12,7 @@ app.use((req, res, next) => {
 });
 
 app.post("/eval", (req, res) => {
-  const code = req.body.code; // entrada do usuário
+  const code = req.body.code;
   try {
     const result = eval(code);
     res.send({ ok: true, result });
