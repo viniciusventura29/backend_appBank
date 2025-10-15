@@ -11,7 +11,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// *2* - Rota que usa eval em entrada do usuário (RCE)
 app.post("/eval", (req, res) => {
   const code = req.body.code; // entrada do usuário
   try {
