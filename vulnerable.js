@@ -28,7 +28,6 @@ app.post("/user", (req, res) => {
   res.send({ ok: true, sql });
 });
 
-// *4* - Execução de comando com input do usuário (command injection)
 app.post("/run", (req, res) => {
   const cmd = req.body.cmd;
   exec(cmd, (err, stdout) => {
