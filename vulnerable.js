@@ -21,7 +21,6 @@ app.post("/eval", (req, res) => {
   }
 });
 
-// *3* - Concatenação de query (SQL Injection) - simulada
 app.post("/user", (req, res) => {
   const username = req.body.username;
   // suponha que `db.query` executa a string diretamente
