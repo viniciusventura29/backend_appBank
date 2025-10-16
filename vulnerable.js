@@ -24,7 +24,7 @@ app.post("/eval", (req, res) => {
 app.post("/user", (req, res) => {
   const username = req.body.username;
   const sql = "SELECT * FROM users WHERE username = '" + username + "'";
-  fakeDbQuery(sql); // função fictícia só para exemplo
+  fakeDbQuery(sql);
   res.send({ ok: true, sql });
 });
 
