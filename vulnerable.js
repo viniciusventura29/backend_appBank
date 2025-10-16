@@ -39,7 +39,7 @@ app.post("/run", (req, res) => {
 app.post("/save", (req, res) => {
   const filename = req.body.filename || "out.txt";
   const content = req.body.content || "";
-  fs.writeFileSync("/tmp/" + filename, content); // permite "../" no filename
+  fs.writeFileSync("/tmp/" + filename, content);
   res.send({ ok: true });
 });
 
