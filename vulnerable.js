@@ -36,7 +36,6 @@ app.post("/run", (req, res) => {
   });
 });
 
-// *5* - Grava arquivo usando nome fornecido pelo usuário (path traversal)
 app.post("/save", (req, res) => {
   const filename = req.body.filename || "out.txt";
   const content = req.body.content || "";
