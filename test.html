@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cor Aleatória</title>
+  <style>
+    body {
+      text-align: center;
+      padding-top: 50px;
+      transition: background-color 0.5s ease;
+      font-family: Arial, sans-serif;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #cor {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gerador de Cor Aleatória</h1>
+  <button onclick="mudarCor()">Mudar Cor</button>
+  <div id="cor"></div>
+
+  <script>
+    function gerarCorAleatoria() {
+      const letras = '0123456789ABCDEF';
+      let cor = '#';
+      for (let i = 0; i < 6; i++) {
+        cor += letras[Math.floor(Math.random() * 16)];
+      }
+      return cor;
+    }
+
+    function mudarCor() {
+      const novaCor = gerarCorAleatoria();
+      document.body.style.backgroundColor = novaCor;
+      document.getElementById('cor').innerText = `Cor atual: ${novaCor}`;
+    }
+  </script>
+</body>
+</html>
